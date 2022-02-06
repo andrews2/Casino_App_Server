@@ -1,7 +1,6 @@
 var express = require("express");
 var app = express();
 var PORT = process.env.PORT || 5000; // 5000 default but get port number
-const test = 0;
 app.use(express.json());
 
 class User{
