@@ -58,6 +58,7 @@ function loadAccountsFromDB(){
         for(let i = 0; i < keys.length; i++){
             accounts.set(keys[i], data[keys[i]]);
         }
+        console.log(accounts);
     })
 }
 
@@ -86,7 +87,7 @@ app.post("/login", function(req, res){
   if (accounts.has(uName)){
     //username exists
     const requestedUser = accounts.get(uName);
-    if (pWord === requestedUser.Password){
+    if (pWord == requestedUser.Password){
         //password is correct
       const objToSend = {
         accountValue: requestedUser.AccountValue
