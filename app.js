@@ -7,6 +7,7 @@ const { getSystemErrorMap } = require("util");
 app.use(express.json());
 
 dbx = new dropbox.Dropbox({accessToken: process.env.DROPBOX_KEY});
+const accountsFilePath = "/Apps/IOT_Casino_Server/Accounts.json";
 
 var accounts = new Map();
 
@@ -47,7 +48,7 @@ function saveAccountsToDB(){
 
     fs.readFile("Accounts.json", 'utf-8', function(err, data){
         if (err) console.log("error while saving acconuts file");
-        dbx.filesUpload({path: "/Accounts.json", contents: data});
+        dbx.filesUpload({path: accountsFilePath, contents: data});
     })
 
     fs.unlink("Accounts.json", function(err){
@@ -56,7 +57,7 @@ function saveAccountsToDB(){
 }
 
 function loadAccountsFromDB(){
-    const accountsJSON = dbx.filesDownload({path: "/Accounts.json"})
+    const accountsJSON = dbx.filesDownload({accountsFilePath})
     .then(function(response){
         const data = JSON.parse(response.result.fileBinary);
         const keys = Object.keys(data);
