@@ -7,11 +7,7 @@ const { getSystemErrorMap } = require("util");
 app.use(express.json());
 dbx = new dropbox.Dropbox({accessToken: process.env.DROPBOX_KEY});
 
-filepath = '/test.txt'
-fs.readFile("test.txt", 'utf-8' ,function(err, data){
-    dbx.filesUpload({path: filepath, contents: data});
-})
-
+var accounts = new Map();
 
 class User{
   constructor(userName, password){
@@ -29,7 +25,22 @@ class User{
   }
 };
 
-const accounts = new Map();
+function addToAccounts(username, user){
+    accounts.set(username, user);
+}
+
+function saveAccountsToDB(){
+    var obj = Object.fromEntries(accounts);
+    var accountsJSON = JSON.stringify(obj, null, 2);
+    fs.writeFile("Accounts.json", accountsJSON, 'utf-8', function(err){
+        if (err) console.log("error while saving acconuts file");
+    })
+
+    fs.readFile("Accounts.json", 'utf-8', function(err, data){
+        dbx.filesUpload({path: "Accounts.json", contents: data});
+    })
+}
+
 
 app.post("/signup", function(req, res){
   uName = req.body.name;
@@ -37,7 +48,8 @@ app.post("/signup", function(req, res){
   if (accounts.has(uName)){
     res.status(400).send();
   } else{
-    accounts.set(uName, new User(uName, pWord));
+    addToAccounts(uName, new User(uName, pWord));
+    saveAccountsToDB();
     res.status(200).send();
   }
 })
@@ -51,7 +63,6 @@ app.post("/login", function(req, res){
     if (pWord == requestedUser.Password){
       const objToSend = {
         name: uName
-
       }
       res.status(200).send(JSON.stringify(objToSend));
     }
