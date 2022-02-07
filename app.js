@@ -31,7 +31,7 @@ function addToAccounts(username, user){
 
 function saveAccountsToDB(){
     var obj = Object.fromEntries(accounts);
-    var accountsJSON = JSON.stringify(obj, null, 2);
+    var accountsJSON = JSON.stringify(obj);
     fs.writeFile("Accounts.json", accountsJSON, 'utf-8', function(err){
         if (err) console.log("error while saving acconuts file");
     })
