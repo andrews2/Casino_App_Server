@@ -37,7 +37,7 @@ function saveAccountsToDB(){
     })
 
     fs.readFile("Accounts.json", 'utf-8', function(err, data){
-        dbx.filesUpload({path: "Accounts.json", contents: data});
+        dbx.filesUpload({path: "/Accounts.json", contents: data});
     })
 }
 
