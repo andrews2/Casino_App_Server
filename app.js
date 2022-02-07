@@ -23,6 +23,10 @@ class User{
   get UserName(){
     return this.userName;
   }
+
+  get AccountValue(){
+      return this.accountValue;
+  }
 };
 
 function addToAccounts(username, user){
@@ -54,11 +58,15 @@ function loadAccountsFromDB(){
         for(let i = 0; i < keys.length; i++){
             accounts.set(keys[i], data[keys[i]]);
         }
-        console.log(accounts);
     })
 }
 
-loadAccountsFromDB();
+function initServer(){
+    loadAccountsFromDB();
+}
+
+//set up server
+initServer();
 
 app.post("/signup", function(req, res){
   uName = req.body.name;
@@ -79,17 +87,21 @@ app.post("/login", function(req, res){
     //username exists
     const requestedUser = accounts.get(uName);
     if (pWord == requestedUser.Password){
+        //password is correct
       const objToSend = {
-        name: uName
+        accountValue: requestedUser.AccountValue
       }
       res.status(200).send(JSON.stringify(objToSend));
+    } 
+    else{
+        //password is inccorect
+        res.status(400).send();
     }
   } else{
+      //username does not exist
     res.status(404).send();
   }
 })
-
-
 
 
 app.listen(PORT, function(){
