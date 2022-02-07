@@ -6,7 +6,6 @@ var fs = require("fs");
 const { getSystemErrorMap } = require("util");
 app.use(express.json());
 const config = {
-    fetch: fetch,
     clientId: bmxmh7wpdpeu01i,
     clientSecret: mrk86xg8z1sxhjm
 }
