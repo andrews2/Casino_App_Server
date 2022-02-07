@@ -5,12 +5,8 @@ var dropbox = require("dropbox");
 var fs = require("fs");
 const { getSystemErrorMap } = require("util");
 app.use(express.json());
-const config = {
-    clientId: "bmxmh7wpdpeu01i",
-    clientSecret: "mrk86xg8z1sxhjm"
-}
 
-dbx = new dropbox.Dropbox(config);
+dbx = new dropbox.Dropbox({accessToken: process.env.DROPBOX_KEY});
 
 var accounts = new Map();
 
