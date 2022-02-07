@@ -59,7 +59,7 @@ function loadAccountsFromDB(){
         for(let i = 0; i < keys.length; i++){
             accounts.set(keys[i], data[keys[i]]);
         }
-        console.log(accounts);
+        console.log(accounts.get("test").Password);
     })
 }
 
