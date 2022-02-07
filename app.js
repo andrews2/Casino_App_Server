@@ -3,12 +3,14 @@ var app = express();
 var PORT = process.env.PORT || 5000; // 5000 default but get port number
 var dropbox = require("dropbox");
 var fs = require("fs");
+const { getSystemErrorMap } = require("util");
 app.use(express.json());
 dbx = new dropbox.Dropbox({accessToken: process.env.DROPBOX_KEY});
 
 filepath = '/test.txt'
-fs.readFile("/test.txt", function(err, data){
-    dbx.filesUpload({path: filepath, contents: data});
+fs.readFile("test.txt", 'utf-8' ,function(err, data){
+    console.log(data.toString());
+    //dbx.filesUpload({path: filepath, contents: data});
 })
 
 
