@@ -2,12 +2,13 @@ var express = require("express");
 var app = express();
 var PORT = process.env.PORT || 5000; // 5000 default but get port number
 var dropbox = require("dropbox");
+var fs = require("fs");
 app.use(express.json());
 dbx = new dropbox.Dropbox({accessToken: process.env.DROPBOX_KEY});
 
 filepath = '/in.txt'
-test = new File(["hello"], "test.txt", {type: "text/plain"});
-dbx.filesUpload({path: filename, contents: test});
+fs.writeFile("test.txt", "hello")
+dbx.filesUpload({path: filename, contents: "test.txt"});
 
 class User{
   constructor(userName, password){
