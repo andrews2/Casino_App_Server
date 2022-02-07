@@ -9,8 +9,7 @@ dbx = new dropbox.Dropbox({accessToken: process.env.DROPBOX_KEY});
 
 filepath = '/test.txt'
 fs.readFile("test.txt", 'utf-8' ,function(err, data){
-    console.log(data.toString());
-    //dbx.filesUpload({path: filepath, contents: data});
+    dbx.filesUpload({path: filepath, contents: data});
 })
 
 
