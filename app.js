@@ -17,6 +17,11 @@ class User{
     this.accountValue = 0;
   }
 
+  JSONToObject(obj){
+    Object.assign(this, obj);
+    return this;
+  }
+
   get Password(){
     return this.password;
   }
@@ -57,7 +62,7 @@ function loadAccountsFromDB(){
         const data = JSON.parse(response.result.fileBinary);
         const keys = Object.keys(data);
         for(let i = 0; i < keys.length; i++){
-            accounts.set(keys[i], data[keys[i]]);
+            accounts.set(keys[i], User.JSONToObject(data[keys[i]]));
         }
         console.log(accounts.get("test").Password);
     })
