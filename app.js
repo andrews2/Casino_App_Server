@@ -37,9 +37,21 @@ function saveAccountsToDB(){
     })
 
     fs.readFile("Accounts.json", 'utf-8', function(err, data){
+        if (err) console.log("error while saving acconuts file");
         dbx.filesUpload({path: "/Accounts.json", contents: data});
     })
+
+    fs.unlink("Accounts.json", function(err){
+        if (err) console.log("error while saving acconuts file");
+    })
 }
+
+function loadAccountsFromDB(){
+    const accountsJSON = dbx.filesDownload({path: "/Accounts.json"})
+    console.log(accountsJSON);
+}
+
+loadAccountsFromDB();
 
 
 app.post("/signup", function(req, res){
