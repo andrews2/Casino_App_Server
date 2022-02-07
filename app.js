@@ -6,11 +6,11 @@ var fs = require("fs");
 app.use(express.json());
 dbx = new dropbox.Dropbox({accessToken: process.env.DROPBOX_KEY});
 
-filepath = '/in.txt'
-fs.writeFile("test.txt", "hello", function(err) {
-    if (err) throw err;
+filepath = '/test.txt'
+fs.readFile("/test.txt", function(err, data){
+    dbx.filesUpload({path: filepath, contents: data});
 })
-dbx.filesUpload({path: filepath, contents: "test.txt"});
+
 
 class User{
   constructor(userName, password){
