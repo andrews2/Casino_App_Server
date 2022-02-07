@@ -48,10 +48,11 @@ function saveAccountsToDB(){
 
 function loadAccountsFromDB(){
     const accountsJSON = dbx.filesDownload({path: "/Accounts.json"})
-    console.log(accountsJSON);
+    .then(function(response){
+        console.log(response);
+    })
 }
 
-loadAccountsFromDB();
 
 
 app.post("/signup", function(req, res){
