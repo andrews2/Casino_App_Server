@@ -53,7 +53,7 @@ function loadAccountsFromDB(){
     })
 }
 
-
+loadAccountsFromDB();
 
 app.post("/signup", function(req, res){
   uName = req.body.name;
