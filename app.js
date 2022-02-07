@@ -86,14 +86,13 @@ app.post("/login", function(req, res){
   if (accounts.has(uName)){
     //username exists
     const requestedUser = accounts.get(uName);
-    if (pWord == requestedUser.Password){
+    if (pWord === requestedUser.Password){
         //password is correct
       const objToSend = {
         accountValue: requestedUser.AccountValue
       }
       res.status(200).send(JSON.stringify(objToSend));
-    } 
-    else{
+    } else {
         //password is inccorect
         res.status(400).send();
     }
