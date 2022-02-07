@@ -7,7 +7,9 @@ app.use(express.json());
 dbx = new dropbox.Dropbox({accessToken: process.env.DROPBOX_KEY});
 
 filepath = '/in.txt'
-fs.writeFile("test.txt", "hello")
+fs.writeFile("test.txt", "hello", function(err) {
+    if (err) throw err;
+})
 dbx.filesUpload({path: filename, contents: "test.txt"});
 
 class User{
