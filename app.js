@@ -57,7 +57,7 @@ function saveAccountsToDB(){
 }
 
 function loadAccountsFromDB(){
-    const accountsJSON = dbx.filesDownload({accountsFilePath})
+    const accountsJSON = dbx.filesDownload({path: accountsFilePath})
     .then(function(response){
         const data = JSON.parse(response.result.fileBinary);
         const keys = Object.keys(data);
