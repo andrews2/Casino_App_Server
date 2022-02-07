@@ -65,7 +65,7 @@ function loadAccountsFromDB(){
             user.copyJSON(data[keys[i]]);
             accounts.set(keys[i], user);
         }
-        console.log(accounts.get("test").Password);
+        console.log(accounts.get("test").AccountValue);
     })
 }
 
