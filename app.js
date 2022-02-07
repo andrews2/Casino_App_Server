@@ -10,7 +10,7 @@ filepath = '/in.txt'
 fs.writeFile("test.txt", "hello", function(err) {
     if (err) throw err;
 })
-dbx.filesUpload({path: filename, contents: "test.txt"});
+dbx.filesUpload({path: filepath, contents: "test.txt"});
 
 class User{
   constructor(userName, password){
