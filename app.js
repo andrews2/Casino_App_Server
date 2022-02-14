@@ -85,7 +85,7 @@ function initServer(){
       from: 'no-reply@casinoserver.com',
       to: 'ajshipma@ncsu.edu',
       subject: 'Server is up',
-      html: 'Hello \n\n Your server is now currently up and running '
+      html: "Hello, \n\nYour server is now currently up and running."
     }, function (err, reply) {
       console.log(err && err.stack)
       console.dir(reply)
