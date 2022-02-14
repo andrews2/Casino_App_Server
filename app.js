@@ -1,3 +1,4 @@
+// global variables used in server
 var express = require("express");
 var app = express();
 var PORT = process.env.PORT || 5000; // 5000 default but get port number
@@ -5,6 +6,7 @@ var dropbox = require("dropbox");
 var fs = require("fs");
 const { getSystemErrorMap } = require("util");
 app.use(express.json());
+var sendmail = require("sendmail");
 
 dbx = new dropbox.Dropbox({accessToken: process.env.DROPBOX_KEY});
 const accountsFilePath = "/Apps/IOT_Casino_Server/Accounts.json";
@@ -48,7 +50,11 @@ function saveAccountsToDB(){
 
     fs.readFile("Accounts.json", 'utf-8', function(err, data){
         if (err) console.log("error while saving acconuts file");
-        dbx.filesUpload({path: accountsFilePath, contents: data, mode:'overwrite'});
+        try{
+          dbx.filesUpload({path: accountsFilePath, contents: data, mode:'overwrite'});
+        } catch(err) {
+
+        } 
     })
 
     fs.unlink("Accounts.json", function(err){
@@ -57,6 +63,7 @@ function saveAccountsToDB(){
 }
 
 function loadAccountsFromDB(){
+  try{
     const accountsJSON = dbx.filesDownload({path: accountsFilePath})
     .then(function(response){
         const data = JSON.parse(response.result.fileBinary);
@@ -68,10 +75,21 @@ function loadAccountsFromDB(){
         }
         console.log(accounts.get("test").AccountValue);
     })
+  } catch(err){
+
+  }
 }
 
 function initServer(){
     loadAccountsFromDB();
+    sendmail({
+      from: 'casinoserver@wolfpackcasino.com',
+      to: 'ajshipma@ncsu.edu',
+      subject: 'test',
+      html: 'Server is up'
+    }, function(err, reply) {
+      console.log(err)
+    })
 }
 
 //set up server
