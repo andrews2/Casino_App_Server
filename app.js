@@ -84,8 +84,8 @@ function initServer(){
     sendmail({
       from: 'no-reply@casinoserver.com',
       to: 'ajshipma@ncsu.edu',
-      subject: 'Hello World',
-      html: 'Mail of test sendmail '
+      subject: 'Server is up',
+      html: 'Hello \n\n Your server is now currently up and running '
     }, function (err, reply) {
       console.log(err && err.stack)
       console.dir(reply)
