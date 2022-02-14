@@ -6,7 +6,7 @@ var dropbox = require("dropbox");
 var fs = require("fs");
 const { getSystemErrorMap } = require("util");
 app.use(express.json());
-var sendmail = require("sendmail");
+var sendmail = require("sendmail")();
 
 dbx = new dropbox.Dropbox({accessToken: process.env.DROPBOX_KEY});
 const accountsFilePath = "/Apps/IOT_Casino_Server/Accounts.json";
@@ -73,7 +73,6 @@ function loadAccountsFromDB(){
             user.copyJSON(data[keys[i]]);
             accounts.set(keys[i], user);
         }
-        console.log(accounts.get("test").AccountValue);
     })
   } catch(err){
 
@@ -83,12 +82,13 @@ function loadAccountsFromDB(){
 function initServer(){
     loadAccountsFromDB();
     sendmail({
-      from: 'casinoserver@wolfpackcasino.com',
+      from: 'no-reply@casinoserver.com',
       to: 'ajshipma@ncsu.edu',
-      subject: 'test',
-      html: 'Server is up'
-    }, function(err, reply) {
-      console.log(err)
+      subject: 'Hello World',
+      html: 'Mail of test sendmail '
+    }, function (err, reply) {
+      console.log(err && err.stack)
+      console.dir(reply)
     })
 }
 
