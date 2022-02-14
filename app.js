@@ -48,7 +48,7 @@ function saveAccountsToDB(){
 
     fs.readFile("Accounts.json", 'utf-8', function(err, data){
         if (err) console.log("error while saving acconuts file");
-        dbx.filesUpload({path: accountsFilePath, contents: data});
+        dbx.filesUpload({path: accountsFilePath, contents: data, mode:'overwrite'});
     })
 
     fs.unlink("Accounts.json", function(err){
