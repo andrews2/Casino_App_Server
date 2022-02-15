@@ -79,17 +79,22 @@ function loadAccountsFromDB(){
   }
 }
 
-function initServer(){
-    loadAccountsFromDB();
+function sendEmail(subject, msg){
+  try{
     sendmail({
       from: 'no-reply@casinoserver.com',
       to: 'ajshipma@ncsu.edu',
-      subject: 'Server is up',
-      html: "Hello, \n\nYour server is now currently up and running."
-    }, function (err, reply) {
-      console.log(err && err.stack)
-      console.dir(reply)
-    })
+      subject: subject,
+      html: msg
+    }, function (err, reply) {})
+  } catch(err){
+    console.log("error connecting to email: " + err)
+  }
+}
+
+function initServer(){
+    loadAccountsFromDB();
+    sendEmail('Server is up',  "Hello,<br><br>Your server is now currently up and running.");
 }
 
 //set up server
