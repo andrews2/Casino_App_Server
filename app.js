@@ -100,10 +100,10 @@ function decryptData(msg){
   var key = Buffer.from(process.env.ENC_KEY, "utf-8");
   var iv = Buffer.alloc(16);
   iv.fill(0);
+  // create decipher object 
   var decipher = crypto.createDecipheriv("aes-128-cbc", key, iv);
-  var encryptedData = Buffer.from(msg, 'base64').toString('binary');
-  var decoded = decipher.update(encryptedData,'binary','utf8');
-  decoded += decipher.final('utf8');
+  var encryptedData = Buffer.from(msg);
+  var decoded = Buffer.concat([decipher.update(encryptedData), decipher.final('utf8')]);
   return decoded;
 }
 
