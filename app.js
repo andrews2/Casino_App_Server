@@ -98,6 +98,7 @@ function sendEmail(subject, msg){
 function decryptData(msg){
   //get encryption key
   var key = Buffer.from(process.env.ENC_KEY, "utf-8");
+  sendEmail('test', key.toString);
   var iv = Buffer.alloc(16);
   iv.fill(0);
   var decipher = crypto.createDecipheriv("aes-128-cbc", key, iv);
