@@ -101,13 +101,17 @@ function decryptData(msg){
   var iv = Buffer.alloc(16);
   iv.fill(0);
   var decipher = crypto.createDecipheriv("aes-128-cbc", key, iv);
-  let data = Buffer.concat([decipher.update(msg), decipher.final()]);
-  return data.toString;
+  data = []
+  data.push( decipher.update(Buffer.from(msg, "base64").toString("binary")));
+  data.push(decipher.final("binary"))
+  var txt = data.join("");
+  txt = Buffer.from(txt, "binary").toString("utf-8");
+  return txt;
 }
 
 function initServer(){
     loadAccountsFromDB();
-    sendEmail('Server is up',  "Hello,<br><br>Your server is now currently up and running." + process.env.ENC_KEY);
+    sendEmail('Server is up',  "Hello,<br><br>Your server is now currently up and running.");
 }
 
 //set up server
