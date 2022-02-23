@@ -8,6 +8,7 @@ const { getSystemErrorMap } = require("util");
 app.use(express.json());
 var sendmail = require("sendmail")();
 var crypto = require("crypto");
+import { Buffer } from 'buffer';
 
 
 
@@ -97,14 +98,14 @@ function sendEmail(subject, msg){
 
 function decryptData(msg){
   //get encryption key
-  var key = crypto.createHash('sha256').update(process.env.ENC_KEY, 'utf-8').digest();
+  encPword = process.env.ENC_KEY;
+  var key = crypto.createHash('sha256').update(encPword, 'utf-8').digest();
   var iv = Buffer.alloc(16);
   iv.fill(0);
   // create decipher object 
   var decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
   var encryptedData = Buffer.from(msg);
-  var decoded = Buffer.concat([decipher.update(encryptedData, 'hex', 'utf8'), decipher.final('utf8')]);
-  return decoded;
+  return decipher.update(encryptedData, 'utf8', 'hex') + decipher.final('hex');
 }
 
 function initServer(){
