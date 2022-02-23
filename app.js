@@ -121,7 +121,8 @@ app.post("/login", function(req, res){
     if (pWord == requestedUser.Password){
         //password is correct
       const objToSend = {
-        accountValue: requestedUser.AccountValue
+        accountValue: requestedUser.AccountValue,
+        username: requestedUser.userName
       }
       res.status(200).send(JSON.stringify(objToSend));
     } else {
