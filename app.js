@@ -101,12 +101,10 @@ function decryptData(msg){
   var iv = Buffer.alloc(16);
   iv.fill(0);
   var decipher = crypto.createDecipheriv("aes-128-cbc", key, iv);
-  data = []
-  data.push( decipher.update(Buffer.from(msg, "base64").toString("binary")));
-  data.push(decipher.final("binary"))
-  var txt = data.join("");
-  txt = Buffer.from(txt, "binary").toString("utf-8");
-  return txt;
+  var encryptedData = Buffer.from(msg, 'base64').toString('binary');
+  var decoded = decipher.update(encryptedData,'binary','utf8');
+  decoded += decipher.final('utf8');
+  return decoded;
 }
 
 function initServer(){
