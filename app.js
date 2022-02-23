@@ -97,13 +97,13 @@ function sendEmail(subject, msg){
 
 function decryptData(msg){
   //get encryption key
-  var key = Buffer.from(process.env.ENC_KEY, "utf-8");
+  var key = cry.createHash('sha256').update(process.env.ENC_KEY, 'utf-8').digest();
   var iv = Buffer.alloc(16);
   iv.fill(0);
   // create decipher object 
-  var decipher = crypto.createDecipheriv("aes-128-cbc", key, iv);
+  var decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
   var encryptedData = Buffer.from(msg);
-  var decoded = Buffer.concat([decipher.update(encryptedData), decipher.final('utf8')]);
+  var decoded = Buffer.concat([decipher.update(encryptedData, 'hex', 'utf8'), decipher.final('utf8')]);
   return decoded;
 }
 
