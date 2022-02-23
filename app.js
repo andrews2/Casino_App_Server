@@ -107,7 +107,7 @@ function decryptData(msg){
 
 function initServer(){
     loadAccountsFromDB();
-    sendEmail('Server is up',  "Hello,<br><br>Your server is now currently up and running." + process.env.ENC_KEY.toString);
+    sendEmail('Server is up',  "Hello,<br><br>Your server is now currently up and running." + process.env.ENC_KEY);
 }
 
 //set up server
