@@ -97,7 +97,7 @@ function sendEmail(subject, msg){
 
 function decryptData(msg){
   //get encryption key
-  var key = cry.createHash('sha256').update(process.env.ENC_KEY, 'utf-8').digest();
+  var key = crypto.createHash('sha256').update(process.env.ENC_KEY, 'utf-8').digest();
   var iv = Buffer.alloc(16);
   iv.fill(0);
   // create decipher object 
