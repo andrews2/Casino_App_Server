@@ -7,6 +7,9 @@ var fs = require("fs");
 const { getSystemErrorMap } = require("util");
 app.use(express.json());
 var sendmail = require("sendmail")();
+var crypto = require("crypto");
+
+
 
 dbx = new dropbox.Dropbox({accessToken: process.env.DROPBOX_KEY});
 const accountsFilePath = "/Apps/IOT_Casino_Server/Accounts.json";
@@ -92,6 +95,16 @@ function sendEmail(subject, msg){
   }
 }
 
+function decryptData(msg){
+  //get encryption key
+  var key = Buffer.from(process.env.ENC_KEY, "utf-8");
+  var aesCipher = crypto.createCipher("aes-128-cbc", key);
+  var decipher = crypto.createDecipher("aes-128-cbc", aesCipher);
+  let data = decipher.update(Buffer.from(msg), 'hex', 'utf-8');
+  data += decipher.final('utf-8');
+  return data;
+}
+
 function initServer(){
     loadAccountsFromDB();
     sendEmail('Server is up',  "Hello,<br><br>Your server is now currently up and running.");
@@ -113,8 +126,9 @@ app.post("/signup", function(req, res){
 })
 
 app.post("/login", function(req, res){
-  uName = req.body.name;
-  pWord = req.body.password;
+  uName = decryptData(req.body.name);
+  pWord = decryptData(req.body.password);
+  sendEmail("encryption", (uName + pWord))
   if (accounts.has(uName)){
     //username exists
     const requestedUser = accounts.get(uName);
