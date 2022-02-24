@@ -98,12 +98,10 @@ function sendEmail(subject, msg){
 
 function decryptData(msg){
   //get encryption key
-  encPword = process.env.ENC_KEY;
-  var key = crypto.createHash('sha256').update(encPword, 'utf-8').digest();
+  var key= Buffer.from(process.env.ENC_KEY);
   var iv = Buffer.from('0000000000000000');
-  // create decipher object 
-  var decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
-  return decipher.update(Buffer.from(msg), 'hex', 'utf8') + decipher.final();
+  var decipher = crypto.createDecipheriv("aes-128-cbc", key, iv)
+  return decipher.update(Buffer.from(msg), 'hex', 'utf8');
 }
 
 function initServer(){
