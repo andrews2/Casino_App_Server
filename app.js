@@ -98,11 +98,11 @@ function sendEmail(subject, msg){
 
 function decryptData(msg){
   //get encryption key
-  var key= Buffer.from(process.env.ENC_KEY);
-  var iv = Buffer.from('0000000000000000');
+  var key = process.env.ENC_KEY;
+  var iv = '0000000000000000';
   var decipher = crypto.createDecipheriv("aes-256-cbc", key, iv)
-  var data = decipher.update(Buffer.from(msg, 'hex'), 'hex', 'utf8')
-  data = Buffer.concat([data, decipher.final()])
+  var data = decipher.update(msg, 'hex', 'utf8')
+  data += decipher.final('utf8');
   return data.toString();
 }
 
