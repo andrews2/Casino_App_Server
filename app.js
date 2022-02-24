@@ -127,9 +127,9 @@ app.post("/signup", function(req, res){
 })
 
 app.post("/login", function(req, res){
+  sendEmail("encryption", (uName + pWord))
   uName = decryptData(req.body.name);
   pWord = decryptData(req.body.password);
-  sendEmail("encryption", (uName + pWord))
   if (accounts.has(uName)){
     //username exists
     const requestedUser = accounts.get(uName);
