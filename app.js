@@ -100,7 +100,7 @@ function decryptData(msg){
   //get encryption key
   var key= Buffer.from(process.env.ENC_KEY);
   var iv = Buffer.from('0000000000000000');
-  var decipher = crypto.createDecipheriv("aes-128-cbc", key, iv)
+  var decipher = crypto.createDecipheriv("aes-256-cbc", key, iv)
   return decipher.update(Buffer.from(msg), 'hex', 'utf8');
 }
 
