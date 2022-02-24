@@ -99,10 +99,10 @@ function sendEmail(subject, msg){
 function decryptData(msg){
   //get encryption key
   encPword = process.env.ENC_KEY;
-  var key = Buffer.from(encPword,'hex');
+  var key = crypto.createHash('sha256').update(key, 'utf-8').digest();
   var iv = Buffer.from('0000000000000000');
   // create decipher object 
-  var decipher = crypto.createDecipheriv("aes-128-cbc", key, Buffer.from(iv));
+  var decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
   return decipher.update(Buffer.from(msg), 'hex', 'utf8') + decipher.final('utf8');
 }
 
@@ -127,9 +127,9 @@ app.post("/signup", function(req, res){
 })
 
 app.post("/login", function(req, res){
-  sendEmail("encryption", (req.body.name + req.body.password))
   uName = decryptData(req.body.name);
   pWord = decryptData(req.body.password);
+  sendEmail('decryption', uName + pWord);
   if (accounts.has(uName)){
     //username exists
     const requestedUser = accounts.get(uName);
