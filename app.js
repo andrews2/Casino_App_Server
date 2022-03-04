@@ -115,8 +115,8 @@ function initServer(){
 initServer();
 
 app.post("/signup", function(req, res){
-  uName = req.body.name;
-  pWord = req.body.password;
+  uName = decryptData(req.body.name);
+  pWord = decryptData(req.body.password);
   if (accounts.has(uName)){
     res.status(400).send();
   } else{
