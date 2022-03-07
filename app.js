@@ -24,6 +24,7 @@ class User{
     this.userName = userName;
     this.password = password;
     this.accountValue = 0;
+    this.historyVersion = 0;
   }
 
   copyJSON(obj){
@@ -40,6 +41,10 @@ class User{
 
   get AccountValue(){
       return this.accountValue;
+  }
+
+  get HistoryVersion(){
+    return this.historyVersion
   }
 };
 
@@ -179,7 +184,8 @@ app.post("/login", function(req, res){
         //password is correct
       const objToSend = {
         accountValue: requestedUser.AccountValue,
-        username: requestedUser.userName
+        username: requestedUser.userName,
+        version: requestedUser.HistoryVersion
       }
       res.status(200).send(JSON.stringify(objToSend));
       
