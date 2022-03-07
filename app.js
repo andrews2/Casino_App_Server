@@ -210,6 +210,7 @@ app.get("/reset_accounts", function(req, res){
   accounts.clear();
   addToAccounts("TEST", new User("TEST", "test"));
   saveAccountsToDB();
+  res.status(200).send;
 })
 
 
