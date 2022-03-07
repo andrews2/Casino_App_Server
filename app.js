@@ -14,6 +14,7 @@ var crypto = require("crypto");
 
 dbx = new dropbox.Dropbox({accessToken: process.env.DROPBOX_KEY});
 const accountsFilePath = "/Apps/IOT_Casino_Server/Accounts.json";
+const historyFilePath = "/Apps/IOT_Casino_Server/User_History";
 
 var accounts = new Map();
 
@@ -83,6 +84,15 @@ function loadAccountsFromDB(){
   }
 }
 
+function addHistoryFiles(userName){
+  const gamesFilePath = historyFilePath + '/' + userName + "_games";
+  const valsFilePath = historyFilePath + '/' + userName + "_vals";
+  try{
+    dbx.filesUpload({path: gamesFilePath, contents: "", mode:'overwrite'});
+    dbx.filesUpload({path: valsFilePath, contents: "", mode:'overwrite'});
+  } catch(err){}
+}
+
 function sendEmail(subject, msg){
   try{
     sendmail({
@@ -121,15 +131,15 @@ app.post("/signup", function(req, res){
     res.status(400).send();
   } else{
     addToAccounts(uName, new User(uName, pWord));
-    saveAccountsToDB();
     res.status(200).send();
+    saveAccountsToDB();
+    addHistoryFiles(uName);
   }
 })
 
 app.post("/login", function(req, res){
   uName = decryptData(req.body.name);
   pWord = decryptData(req.body.password);
-  sendEmail('decryption', uName + pWord);
   if (accounts.has(uName)){
     //username exists
     const requestedUser = accounts.get(uName);
