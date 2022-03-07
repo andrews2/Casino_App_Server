@@ -8,6 +8,7 @@ const { getSystemErrorMap } = require("util");
 app.use(express.json());
 var sendmail = require("sendmail")();
 var crypto = require("crypto");
+const { path } = require("express/lib/application");
 
 
 
@@ -84,12 +85,34 @@ function loadAccountsFromDB(){
   }
 }
 
-function addHistoryFiles(userName){
+function createHistoryFiles(userName){
   const gamesFilePath = historyFilePath + '/' + userName + "_games.ser";
   const valsFilePath = historyFilePath + '/' + userName + "_vals.ser";
   try{
     dbx.filesUpload({path: gamesFilePath, contents: "", mode:'overwrite'});
     dbx.filesUpload({path: valsFilePath, contents: "", mode:'overwrite'});
+  } catch(err){}
+}
+
+function getGamesFile(userName){
+  try{
+    const gamesFilePath = historyFilePath + '/' + userName + "_games.ser";
+    const file = dbx.filesDownload({path: gamesFilePath}).then(function(response){
+      fs.writeFile(userName + "_games.ser", response.result.fileBinary, 'utf-8', function(err){
+        if (err) console.log("error while saving games file");
+      })
+    })
+  } catch(err){}
+}
+
+function getValsFile(userName){
+  try{
+    const valsFilePath = historyFilePath + '/' + userName + "_vals.ser";
+    return dbx.filesDownload({path: valsFilePath}).then(function(response){
+      fs.writeFile(userName + "_vals.ser", response.result.fileBinary, 'utf-8', function(err){
+        if (err) console.log("error while saving games file");
+      })
+    })
   } catch(err){}
 }
 
@@ -133,7 +156,7 @@ app.post("/signup", function(req, res){
     addToAccounts(uName, new User(uName, pWord));
     res.status(200).send();
     saveAccountsToDB();
-    addHistoryFiles(uName);
+    createHistoryFiles(uName);
   }
 })
 
@@ -150,6 +173,9 @@ app.post("/login", function(req, res){
         username: requestedUser.userName
       }
       res.status(200).send(JSON.stringify(objToSend));
+      getGamesFile(uName);
+      getValsFile(uName);
+      
     } else {
         //password is inccorect
         res.status(400).send();
@@ -158,6 +184,22 @@ app.post("/login", function(req, res){
       //username does not exist
     res.status(404).send();
   }
+})
+
+app.post("/getHistGames", function(req, res){
+  var options = {root: path.join(__dirname)};
+  var fileName = req.body.name + "_games.ser";
+  res.sendFile(fileName, options, function(err){
+    if (err) console.log(err);
+  })
+})
+
+app.post("/getHistVals", function(req, res){
+  var options = {root: path.join(__dirname)};
+  var fileName = req.body.name + "_vals.ser";
+  res.sendFile(fileName, options, function(err){
+    if (err) console.log(err);
+  })
 })
 
 app.get("/reset_accounts", function(req, res){
