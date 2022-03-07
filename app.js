@@ -105,6 +105,7 @@ function getGamesFile(userName){
       var wStream = fs.createWriteStream(savePath);
       wStream.write(data);
       wStream.end();
+      console.log("File saved at: " + savePath)
     })
   } catch(err){}
 }
@@ -118,6 +119,7 @@ function getValsFile(userName){
       var wStream = fs.createWriteStream(savePath);
       wStream.write(data);
       wStream.end();
+      console.log("File saved at: " + savePath)
     })
   } catch(err){}
 }
