@@ -99,7 +99,8 @@ function getGamesFile(userName){
     const gamesFilePath = historyFilePath + '/' + userName + "_games.ser";
     const savePath = __dirname + "/histFiles/" + userName + "_games.ser";
     const file = dbx.filesDownload({path: gamesFilePath}).then(function(response){
-      fs.writeFile(savePath, response.result.fileBinary, 'utf-8', function(err){
+      const data = Buffer.from(response.result.fileBinary, 'binary');
+      fs.writeFile(savePath, data, 'utf-8', function(err){
         if (err) console.log("error while saving games file");
       })
     })
@@ -111,7 +112,8 @@ function getValsFile(userName){
     const valsFilePath = historyFilePath + '/' + userName + "_vals.ser";
     const savePath = __dirname + "/histFiles/" + userName + "_vals.ser";
     return dbx.filesDownload({path: valsFilePath}).then(function(response){
-      fs.writeFile(savePath, response.result.fileBinary, 'utf-8', function(err){
+      const data = Buffer.from(response.result.fileBinary, 'binary');
+      fs.writeFile(savePath, data, 'utf-8', function(err){
         if (err) console.log("error while saving games file");
       })
     })
