@@ -113,7 +113,7 @@ function getValsFile(userName){
     const savePath = __dirname + "/histFiles/" + userName + "_vals.ser";
     return dbx.filesDownload({path: valsFilePath}).then(function(response){
       const data = Buffer.from(response.result.fileBinary, 'binary');
-      fs.writeFile(savePath, data, 'utf-8', function(err){
+      fs.writeFile(savePath, response.result.fileBinary, 'utf-8', function(err){
         if (err) console.log("error while saving games file");
       })
     })
@@ -210,7 +210,6 @@ app.get("/reset_accounts", function(req, res){
   accounts.clear();
   addToAccounts("TEST", new User("TEST", "test"));
   saveAccountsToDB();
-  res.status(200).send;
 })
 
 
