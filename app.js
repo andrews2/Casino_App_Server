@@ -96,35 +96,33 @@ function createHistoryFiles(userName){
   } catch(err){}
 }
 
-function getGamesFile(userName, _callback){
+function getGamesFile(userName, callback){
   try{
     const gamesFilePath = historyFilePath + '/' + userName + "_games.ser";
     const savePath = __dirname + "/" + userName + "_games.ser";
     const file = dbx.filesDownload({path: gamesFilePath}).then(function(response){
       const data = Buffer.from(response.result.fileBinary, 'binary');
-      var wStream = fs.createWriteStream(savePath);
-      wStream.write(data);
-      wStream.end();
+      fs.writeFile(savePath, data, function(){
+        callback();
+      })
       console.log("File saved at: " + savePath)
     })
   } catch(err){}
 
-  _callback();
 }
 
-function getValsFile(userName, _callback){
+function getValsFile(userName, callback){
   try{
     const valsFilePath = historyFilePath + '/' + userName + "_vals.ser";
     const savePath = __dirname + "/" + userName + "_vals.ser";
     return dbx.filesDownload({path: valsFilePath}).then(function(response){
       const data = Buffer.from(response.result.fileBinary, 'binary');
-      var wStream = fs.createWriteStream(savePath);
-      wStream.write(data);
-      wStream.end();
+      fs.writeFile(savePath, data, function(){
+        callback();
+      })
       console.log("File saved at: " + savePath)
     })
   } catch(err){}
-  _callback();
 }
 
 function sendEmail(subject, msg){
