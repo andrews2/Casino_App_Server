@@ -214,6 +214,13 @@ app.get("/reset_accounts", function(req, res){
   saveAccountsToDB();
 })
 
+app.get("/", function(req, res){
+  const options = {root: __dirname + "/histFiles"};
+  res.sendFile("hello.html", options, function(err){
+    console.log(err);
+  })
+})
+
 
 app.listen(PORT, function(){
     //start the server on the port
