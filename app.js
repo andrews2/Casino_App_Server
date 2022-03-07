@@ -18,7 +18,6 @@ const accountsFilePath = "/Apps/IOT_Casino_Server/Accounts.json";
 const historyFilePath = "/Apps/IOT_Casino_Server/User_History";
 
 var accounts = new Map();
-var completedHistFiles = new 
 
 class User{
   constructor(userName, password){
