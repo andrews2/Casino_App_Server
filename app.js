@@ -18,6 +18,7 @@ const accountsFilePath = "/Apps/IOT_Casino_Server/Accounts.json";
 const historyFilePath = "/Apps/IOT_Casino_Server/User_History";
 
 var accounts = new Map();
+var completedHistFiles = new 
 
 class User{
   constructor(userName, password){
@@ -96,7 +97,7 @@ function createHistoryFiles(userName){
   } catch(err){}
 }
 
-function getGamesFile(userName){
+function getGamesFile(userName, _callback){
   try{
     const gamesFilePath = historyFilePath + '/' + userName + "_games.ser";
     const savePath = __dirname + "/" + userName + "_games.ser";
@@ -108,9 +109,11 @@ function getGamesFile(userName){
       console.log("File saved at: " + savePath)
     })
   } catch(err){}
+
+  _callback();
 }
 
-function getValsFile(userName){
+function getValsFile(userName, _callback){
   try{
     const valsFilePath = historyFilePath + '/' + userName + "_vals.ser";
     const savePath = __dirname + "/" + userName + "_vals.ser";
@@ -122,6 +125,7 @@ function getValsFile(userName){
       console.log("File saved at: " + savePath)
     })
   } catch(err){}
+  _callback();
 }
 
 function sendEmail(subject, msg){
@@ -193,21 +197,23 @@ app.post("/login", function(req, res){
 })
 
 app.post("/getHistGames", function(req, res){
-  getGamesFile(req.body.name);
-  var options = {root: __dirname};
-  var fileName = req.body.name + "_games.ser";
-  res.sendFile(fileName, options, function(err){
-    if (err) console.log(err);
-  })
+  getGamesFile(req.body.name, function(){
+    var options = {root: __dirname};
+    var fileName = req.body.name + "_games.ser";
+    res.sendFile(fileName, options, function(err){
+      if (err) console.log(err);
+    })
+  });
 })
 
 app.post("/getHistVals", function(req, res){
-  getValsFile(req.body.name);
-  var options = {root: __dirname};
-  var fileName = req.body.name + "_vals.ser";
-  res.sendFile(fileName, options, function(err){
-    if (err) console.log(err);
-  })
+  getValsFile(req.body.name, function(){
+    var options = {root: __dirname};
+    var fileName = req.body.name + "_vals.ser";
+    res.sendFile(fileName, options, function(err){
+      if (err) console.log(err);
+    })
+  });
 })
 
 app.get("/reset_accounts", function(req, res){
