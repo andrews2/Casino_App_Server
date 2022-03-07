@@ -190,7 +190,7 @@ app.post("/login", function(req, res){
 
 app.post("/getHistGames", function(req, res){
   getGamesFile(req.body.name);
-  var options = {root: __dirname + "/histFiles"};
+  var options = {root: __dirname};
   var fileName = req.body.name + "_games.ser";
   res.sendFile(fileName, options, function(err){
     if (err) console.log(err);
@@ -199,7 +199,7 @@ app.post("/getHistGames", function(req, res){
 
 app.post("/getHistVals", function(req, res){
   getValsFile(req.body.name);
-  var options = {root: __dirname + "/histFiles"};
+  var options = {root: __dirname};
   var fileName = req.body.name + "_vals.ser";
   res.sendFile(fileName, options, function(err){
     if (err) console.log(err);
