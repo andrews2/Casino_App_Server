@@ -85,8 +85,8 @@ function loadAccountsFromDB(){
 }
 
 function addHistoryFiles(userName){
-  const gamesFilePath = historyFilePath + '/' + userName + "_games";
-  const valsFilePath = historyFilePath + '/' + userName + "_vals";
+  const gamesFilePath = historyFilePath + '/' + userName + "_games.ser";
+  const valsFilePath = historyFilePath + '/' + userName + "_vals.ser";
   try{
     dbx.filesUpload({path: gamesFilePath, contents: "", mode:'overwrite'});
     dbx.filesUpload({path: valsFilePath, contents: "", mode:'overwrite'});
@@ -158,6 +158,12 @@ app.post("/login", function(req, res){
       //username does not exist
     res.status(404).send();
   }
+})
+
+app.get("/reset_accounts", function(req, res){
+  accounts.clear();
+  addToAccounts("TEST", new User("TEST", "TEST"));
+  saveAccountsToDB();
 })
 
 
