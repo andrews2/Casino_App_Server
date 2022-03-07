@@ -104,6 +104,7 @@ function getGamesFile(userName){
       const data = Buffer.from(response.result.fileBinary, 'binary');
       var wStream = fs.createWriteStream(savePath);
       wStream.write(data);
+      wStream.end();
     })
   } catch(err){}
 }
@@ -116,6 +117,7 @@ function getValsFile(userName){
       const data = Buffer.from(response.result.fileBinary, 'binary');
       var wStream = fs.createWriteStream(savePath);
       wStream.write(data);
+      wStream.end();
     })
   } catch(err){}
 }
