@@ -175,8 +175,6 @@ app.post("/login", function(req, res){
         username: requestedUser.userName
       }
       res.status(200).send(JSON.stringify(objToSend));
-      getGamesFile(uName);
-      getValsFile(uName);
       
     } else {
         //password is inccorect
@@ -189,6 +187,7 @@ app.post("/login", function(req, res){
 })
 
 app.post("/getHistGames", function(req, res){
+  getGamesFile(req.body.name);
   var options = {root: __dirname};
   var fileName = req.body.name + "_games.ser";
   res.sendFile(fileName, options, function(err){
@@ -197,6 +196,7 @@ app.post("/getHistGames", function(req, res){
 })
 
 app.post("/getHistVals", function(req, res){
+  getValsFile(req.body.name);
   var options = {root: path.join(__dirname)};
   var fileName = req.body.name + "_vals.ser";
   res.sendFile(fileName, options, function(err){
