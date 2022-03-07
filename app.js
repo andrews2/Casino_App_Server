@@ -81,7 +81,9 @@ function loadAccountsFromDB(){
         }
     })
   } catch(err){
-
+    accounts.clear();
+    addToAccounts("TEST", new User("TEST", "test"));
+    saveAccountsToDB();
   }
 }
 
