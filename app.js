@@ -187,7 +187,7 @@ app.post("/login", function(req, res){
 })
 
 app.post("/getHistGames", function(req, res){
-  var options = {root: path.join(__dirname)};
+  var options = {root: __dirname};
   var fileName = req.body.name + "_games.ser";
   res.sendFile(fileName, options, function(err){
     if (err) console.log(err);
@@ -204,7 +204,7 @@ app.post("/getHistVals", function(req, res){
 
 app.get("/reset_accounts", function(req, res){
   accounts.clear();
-  addToAccounts("TEST", new User("TEST", "TEST"));
+  addToAccounts("TEST", new User("TEST", "test"));
   saveAccountsToDB();
 })
 
