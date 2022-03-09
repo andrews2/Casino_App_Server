@@ -203,7 +203,7 @@ app.post("/getHistGames", function(req, res){
   getGamesFile(req.body.name, function(){
     var options = {root: __dirname};
     var fileName = req.body.name + "_games.ser";
-    res.sendFile(fileName, options, function(err){
+    res.status(200).sendFile(fileName, options, function(err){
       if (err) console.log(err);
     })
   });
@@ -213,7 +213,7 @@ app.post("/getHistVals", function(req, res){
   getValsFile(req.body.name, function(){
     var options = {root: __dirname};
     var fileName = req.body.name + "_vals.ser";
-    res.sendFile(fileName, options, function(err){
+    res.status(200).sendFile(fileName, options, function(err){
       if (err) console.log(err);
     })
   });
@@ -223,8 +223,10 @@ app.get("/reset_accounts", function(req, res){
   accounts.clear();
   var usr = new User("TEST", "test");
   usr.accountValue = 200;
+  usr.historyVersion = 1;
   addToAccounts("TEST", usr);
   saveAccountsToDB();
+  res.status(200).send();
 })
 
 app.get("/", function(req, res){
