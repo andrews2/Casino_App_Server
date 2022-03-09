@@ -221,7 +221,9 @@ app.post("/getHistVals", function(req, res){
 
 app.get("/reset_accounts", function(req, res){
   accounts.clear();
-  addToAccounts("TEST", new User("TEST", "test"));
+  var usr = new User("TEST", "test");
+  usr.accountValue = 200;
+  addToAccounts("TEST", usr);
   saveAccountsToDB();
 })
 
