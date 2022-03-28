@@ -241,7 +241,7 @@ app.get("/reset_accounts", function(req, res){
   usr.historyVersion = 1;
   addToAccounts("TEST", usr);
   saveAccountsToDB();
-  res.status(200).send();
+  res.sendFile("accountsreset.html");
 })
 
 app.get("/", function(req, res){
