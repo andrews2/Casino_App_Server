@@ -170,7 +170,6 @@ app.post("/signup", function(req, res){
     addToAccounts(uName, new User(uName, pWord));
     res.status(200).send();
     saveAccountsToDB();
-    createHistoryFiles(uName);
   }
 })
 
@@ -220,10 +219,11 @@ app.post("/getHistVals", function(req, res){
 })
 
 app.post("/updateHist", function(req, res){
+  var uName = req.body.uName
   var histGames = Buffer.from(req.body.histGames, 'binary') 
   var histVals = Buffer.from(req.body.histVals, 'binary')
-  console.log(histGames)
-  console.log(histVals)
+  console.log(uName);
+  res.status(200).send();
 })
 
 app.get("/reset_accounts", function(req, res){
