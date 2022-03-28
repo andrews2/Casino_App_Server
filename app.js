@@ -220,6 +220,7 @@ app.post("/getHistVals", function(req, res){
 
 app.post("/updateHist", function(req, res){
   var uName = Buffer.from(req.body.uName).toString('ascii')
+  console.log(parseInt(Buffer.from(req.body.version).toString('ascii')))
   accounts.get(uName).HistoryVersion = parseInt(Buffer.from(req.body.version).toString('ascii'))
   saveAccountsToDB();
   var histGames = Buffer.from(req.body.histGames, 'binary') 
