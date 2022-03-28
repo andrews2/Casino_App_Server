@@ -236,6 +236,10 @@ app.get("/", function(req, res){
   })
 })
 
+app.post("/wake", function(req, res){
+  res.status(200).send();
+})
+
 
 app.listen(PORT, function(){
     //start the server on the port
