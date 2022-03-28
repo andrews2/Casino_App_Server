@@ -222,7 +222,12 @@ app.post("/updateHist", function(req, res){
   var uName = Buffer.from(req.body.uName).toString('ascii')
   var histGames = Buffer.from(req.body.histGames, 'binary') 
   var histVals = Buffer.from(req.body.histVals, 'binary')
-  console.log(uName);
+  const gamesFilePath = historyFilePath + '/' + uName + "_games.ser";
+  const valsFilePath = historyFilePath + '/' + uName + "_vals.ser";
+  try{
+    dbx.filesUpload({path: gamesFilePath, contents: histGames, mode:'overwrite'});
+    dbx.filesUpload({path: valsFilePath, contents: histVals, mode:'overwrite'});
+  } catch(err){}
   res.status(200).send();
 })
 
