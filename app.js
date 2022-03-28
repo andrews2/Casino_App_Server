@@ -199,7 +199,7 @@ app.post("/login", function(req, res){
   }
 })
 
-app.get("/getHistGames", function(req, res){
+app.post("/getHistGames", function(req, res){
   getGamesFile(req.body.name, function(){
     var options = {root: __dirname};
     var fileName = req.body.name + "_games.ser";
@@ -209,7 +209,7 @@ app.get("/getHistGames", function(req, res){
   });
 })
 
-app.get("/getHistVals", function(req, res){
+app.post("/getHistVals", function(req, res){
   getValsFile(req.body.name, function(){
     var options = {root: __dirname};
     var fileName = req.body.name + "_vals.ser";
