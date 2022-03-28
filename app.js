@@ -220,7 +220,7 @@ app.post("/getHistVals", function(req, res){
 
 app.post("/updateHist", function(req, res){
   var uName = Buffer.from(req.body.uName).toString('ascii')
-  accounts(uName).HistoryVersion = parseInt(Buffer.from(req.body.version).toString('ascii'))
+  accounts.get(uName).HistoryVersion = parseInt(Buffer.from(req.body.version).toString('ascii'))
   var histGames = Buffer.from(req.body.histGames, 'binary') 
   var histVals = Buffer.from(req.body.histVals, 'binary')
   const gamesFilePath = historyFilePath + '/' + uName + "_games.ser";
