@@ -220,10 +220,10 @@ app.post("/getHistVals", function(req, res){
 })
 
 app.post("/updateHist", function(req, res){
-  var histGames = req.body.histGames
-  var histVals = req.body.histVals
-  console.log(JSON.parse(histGames))
-  console.log(JSON.parse(histVals))
+  var histGames = Buffer.from(req.body.histGames, 'binary') 
+  var histVals = Buffer.from(req.body.histVals, 'binary')
+  console.log(histGames)
+  console.log(histVals)
 })
 
 app.get("/reset_accounts", function(req, res){
