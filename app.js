@@ -219,6 +219,13 @@ app.post("/getHistVals", function(req, res){
   });
 })
 
+app.post("/updateHist", function(req, res){
+  var histGames = req.body.histGames
+  var histVals = req.body.histVals
+  console.log(JSON.parse(histGames))
+  console.log(JSON.parse(histVals))
+})
+
 app.get("/reset_accounts", function(req, res){
   accounts.clear();
   var usr = new User("TEST", "test");
