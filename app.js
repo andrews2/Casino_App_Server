@@ -46,10 +46,6 @@ class User{
   get HistoryVersion(){
     return this.historyVersion
   }
-
-  set historyVersion(val){
-    this.historyVersion = val;
-  }
 };
 
 function addToAccounts(username, user){
