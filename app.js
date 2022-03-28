@@ -219,7 +219,7 @@ app.post("/getHistVals", function(req, res){
 })
 
 app.post("/updateHist", function(req, res){
-  var uName = JSON.stringify(req.body.uName)
+  var uName = Buffer.from(req.body.uName).toString('ascii')
   var histGames = Buffer.from(req.body.histGames, 'binary') 
   var histVals = Buffer.from(req.body.histVals, 'binary')
   console.log(uName);
