@@ -245,7 +245,7 @@ app.get("/reset_accounts", function(req, res){
 })
 
 app.get("/", function(req, res){
-  const options = {root: __dirname + "/histFiles"};
+  const options = {root: __dirname};
   res.sendFile("hello.html", options, function(err){
     console.log(err);
   })
