@@ -46,6 +46,10 @@ class User{
   get HistoryVersion(){
     return this.historyVersion
   }
+
+  set historyVersion(val){
+    this.historyVersion = val;
+  }
 };
 
 function addToAccounts(username, user){
@@ -221,7 +225,7 @@ app.post("/getHistVals", function(req, res){
 app.post("/updateHist", function(req, res){
   var uName = Buffer.from(req.body.uName).toString('ascii')
   console.log(parseInt(Buffer.from(req.body.version).toString('ascii')))
-  accounts.get(uName).HistoryVersion = parseInt(Buffer.from(req.body.version).toString('ascii'))
+  accounts.get(uName).historyVersion = parseInt(Buffer.from(req.body.version).toString('ascii'))
   console.log(accounts.get(uName))
   saveAccountsToDB();
   var histGames = Buffer.from(req.body.histGames, 'binary') 
