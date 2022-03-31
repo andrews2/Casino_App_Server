@@ -17,6 +17,7 @@ const { path } = require("express/lib/application");
 dbx = new dropbox.Dropbox({accessToken: process.env.DROPBOX_KEY});
 const accountsFilePath = "/Apps/IOT_Casino_Server/Accounts.json";
 const historyFilePath = "/Apps/IOT_Casino_Server/User_History";
+const pictureFilePath = "/Apps/IOT_Casino_Server/Pictures";
 
 var accounts = new Map();
 
@@ -26,6 +27,7 @@ class User{
     this.password = password;
     this.accountValue = 0;
     this.historyVersion = 0;
+    this.profilePicture = "none";
   }
 
   copyJSON(obj){
@@ -45,7 +47,11 @@ class User{
   }
 
   get HistoryVersion(){
-    return this.historyVersion
+    return this.historyVersion;
+  }
+
+  get profilePicture(){
+    return this.profilePicture;
   }
 };
 
@@ -93,15 +99,6 @@ function loadAccountsFromDB(){
   }
 }
 
-function createHistoryFiles(userName){
-  const gamesFilePath = historyFilePath + '/' + userName + "_games.ser";
-  const valsFilePath = historyFilePath + '/' + userName + "_vals.ser";
-  try{
-    dbx.filesUpload({path: gamesFilePath, contents: "", mode:'overwrite'});
-    dbx.filesUpload({path: valsFilePath, contents: "", mode:'overwrite'});
-  } catch(err){}
-}
-
 function getGamesFile(userName, callback){
   try{
     const gamesFilePath = historyFilePath + '/' + userName + "_games.ser";
@@ -127,6 +124,20 @@ function getValsFile(userName, callback){
         callback();
       })
       console.log("File saved at: " + savePath)
+    })
+  } catch(err){}
+}
+
+function getProfilePicture(fileName, callback){
+  try{
+    const picFP = pictureFilePath + '/' + fileName;
+    const savePath = __dirname + '/' + fileName;
+    return dbx.filesDownload({path: picFP}).then(function(response){
+      const data = Buffer.from(response.result.fileBinary, 'binary');
+      fs.writeFile(savePath, data, function(){
+        callback();
+      })
+      console.log("File saved at: " + savePath);
     })
   } catch(err){}
 }
@@ -185,7 +196,8 @@ app.post("/login", function(req, res){
       const objToSend = {
         accountValue: requestedUser.AccountValue,
         username: requestedUser.userName,
-        version: requestedUser.HistoryVersion
+        version: requestedUser.HistoryVersion,
+        profilePicture: requestedUser.profilePicture
       }
       res.status(200).send(JSON.stringify(objToSend));
       
@@ -217,6 +229,17 @@ app.post("/getHistVals", function(req, res){
       if (err) console.log(err);
     })
   });
+})
+
+app.post("/getProfilePicture", function(req,res){
+  var uName = req.body.name;
+  var pictureFile = accounts.get(uName).profilePicture;
+  getProfilePicture(pictureFile, function(){
+    var options = {root: __dirname};
+    res.status(200).sendFile(pictureFile, options, function(err){
+      if (err) console.log(err);
+    })
+  })
 })
 
 app.post("/updateHist", function(req, res){
