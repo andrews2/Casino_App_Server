@@ -86,6 +86,7 @@ function loadAccountsFromDB(){
             var user = new User(data[keys[i]].username, data[keys[i]].password)
             user.copyJSON(data[keys[i]]);
             accounts.set(keys[i], user);
+            console.log(accounts.get(keys[i]));
         }
     })
   } catch(err){
@@ -159,9 +160,7 @@ function decryptData(msg){
 }
 
 function initServer(){
-    loadAccountsFromDB().then(function(){
-      console.log(accounts.get("TEST"))
-    })
+    loadAccountsFromDB()
 }
 
 //set up server
