@@ -27,6 +27,7 @@ class User{
     this.password = password;
     this.accountValue = 0;
     this.historyVersion = 0;
+    this.profilePicture = 'none';
   }
 
   copyJSON(obj){
@@ -47,6 +48,9 @@ class User{
 
   get HistoryVersion(){
     return this.historyVersion;
+  }
+  get profilePicture(){
+    return this.profilePicture;
   }
 };
 
