@@ -260,8 +260,9 @@ app.get("/reset_accounts", function(req, res){
   usr.accountValue = 200;
   usr.historyVersion = 1;
   addToAccounts("TEST", usr);
+  const options = {root: __dirname};
   saveAccountsToDB();
-  res.sendFile("accountsreset.html");
+  res.sendFile("accountsreset.html", options);
 })
 
 app.post("/wake", function(req, res){
