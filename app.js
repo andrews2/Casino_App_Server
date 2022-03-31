@@ -49,13 +49,6 @@ class User{
   get HistoryVersion(){
     return this.historyVersion;
   }
-  get profilePicture(){
-    return this.profilePicture;
-  }
-
-  set profilePicture(fileName){
-    this.profilePicture = fileName;
-  }
 };
 
 function addToAccounts(username, user){
