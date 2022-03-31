@@ -257,7 +257,7 @@ app.get("/", function(req, res){
 })
 
 app.get("/download", function(req,res){
-  res.download(__dirname + "app-debug.apk");
+  res.download(__dirname + "/app-debug.apk");
   res.status(200);
 })
 
