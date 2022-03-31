@@ -88,7 +88,6 @@ function loadAccountsFromDB(){
             accounts.set(keys[i], user);
         }
     })
-    console.log(accounts.get("TEST"))
   } catch(err){
   }
 }
@@ -160,8 +159,9 @@ function decryptData(msg){
 }
 
 function initServer(){
-    loadAccountsFromDB();
-    sendEmail('Server is up',  "Hello,<br><br>Your server is now currently up and running.");
+    loadAccountsFromDB().then(function(){
+      console.log(accounts.get("TEST"))
+    })
 }
 
 //set up server
