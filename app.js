@@ -82,17 +82,14 @@ function loadAccountsFromDB(){
     .then(function(response){
         const data = JSON.parse(response.result.fileBinary);
         const keys = Object.keys(data);
-        console.log(data);
         for(let i = 0; i < keys.length; i++){
             var user = new User(data[keys[i]].username, data[keys[i]].password)
             user.copyJSON(data[keys[i]]);
             accounts.set(keys[i], user);
         }
     })
+    console.log(accounts)
   } catch(err){
-    accounts.clear();
-    addToAccounts("TEST", new User("TEST", "test"));
-    saveAccountsToDB();
   }
 }
 
