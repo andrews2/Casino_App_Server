@@ -244,15 +244,19 @@ app.get("/reset_accounts", function(req, res){
   res.sendFile("accountsreset.html");
 })
 
+app.post("/wake", function(req, res){
+  res.status(200).send();
+})
+
 app.get("/", function(req, res){
   const options = {root: __dirname};
-  res.sendFile("hello.html", options, function(err){
+  res.sendFile("home.html", options, function(err){
     console.log(err);
   })
 })
 
-app.post("/wake", function(req, res){
-  res.status(200).send();
+app.get("/download", function(req,res){
+  res.download(__dirname + "app-debug.apk")
 })
 
 
