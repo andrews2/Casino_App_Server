@@ -88,7 +88,7 @@ function loadAccountsFromDB(){
             accounts.set(keys[i], user);
         }
     })
-    console.log(accounts)
+    console.log(accounts.get("TEST"))
   } catch(err){
   }
 }
