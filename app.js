@@ -52,6 +52,10 @@ class User{
   get profilePicture(){
     return this.profilePicture;
   }
+
+  set profilePicture(fileName){
+    this.profilePicture = fileName;
+  }
 };
 
 function addToAccounts(username, user){
