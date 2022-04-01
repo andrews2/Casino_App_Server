@@ -250,6 +250,18 @@ app.post("/updateHist", function(req, res){
   res.status(200).send();
 })
 
+app.post("/updateProfilePic", function(req, res){
+  var uName = Buffer.from(req.body.uName).toString('ascii');
+  var fileName = Buffer.from(req.body.fileName).toString('ascii')
+  accounts.get(uName).profilePicture = fileName;
+  saveAccountsToDB();
+  var profPic = Buffer.from(req.body.image, 'binary')
+  const imageFP = pictureFilePath + '/' + fileName
+  try{
+    dbx.filesUpload({path: imageFP, contents: profPic, mode:'overwrite'})
+  } catch(err){}
+})
+
 app.get("/reset_accounts", function(req, res){
   accounts.clear();
   var usr = new User("TEST", "test");
