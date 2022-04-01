@@ -261,6 +261,7 @@ app.post("/updateProfilePic", function(req, res){
   try{
     dbx.filesUpload({path: imageFP, contents: profPic, mode:'overwrite'})
   } catch(err){}
+  res.status(200).send();
 })
 
 app.get("/reset_accounts", function(req, res){
