@@ -6,7 +6,8 @@ var PORT = process.env.PORT || 5000; // 5000 default but get port number
 var dropbox = require("dropbox");
 var fs = require("fs");
 const { getSystemErrorMap } = require("util");
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 var sendmail = require("sendmail")();
 var crypto = require("crypto");
 const { path } = require("express/lib/application");
