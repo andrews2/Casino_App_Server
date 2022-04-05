@@ -288,7 +288,11 @@ app.get("/", function(req, res){
 
 app.get("/download", function(req,res){
   res.download(__dirname + "/app-debug.apk");
-  res.status(200);
+  res.status(200).send();
+})
+
+app.post("/serverNotificaiton", function(req, res){
+  res.status(200).send();
 })
 
 
