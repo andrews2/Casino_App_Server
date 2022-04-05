@@ -291,7 +291,7 @@ app.get("/download", function(req,res){
   res.status(200).send();
 })
 
-app.post("/serverNotificaiton", function(req, res){
+app.post("/serverNotification", function(req, res){
   res.status(200).send();
 })
 
