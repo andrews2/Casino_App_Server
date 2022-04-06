@@ -292,7 +292,7 @@ app.get("/download", function(req,res){
 })
 
 app.post("/serverNotification", function(req, res){
-  console.log(req.body.Name)
+  console.log("Tag: " + req.body.Name + " is missing")
   res.status(200).send();
 })
 
