@@ -292,6 +292,7 @@ app.get("/download", function(req,res){
 })
 
 app.post("/serverNotification", function(req, res){
+  console.log(req.body.Name)
   res.status(200).send();
 })
 
