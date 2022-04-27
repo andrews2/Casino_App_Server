@@ -6,13 +6,28 @@
         <script src = "https://socket.io/socket.io.js"></script>
     </head>
     <body>
-        <p>Welcome to wolf pack casino. you can download our app below</p>
-        <button id="download_button">Download App</button>
-        <script type="text/javascript">
-            $('#download_button').click(function(){
-                window.open("/download")
-                console.log("download");
-            })
-        </script>
+        <div style="position:fixed; width:100%; top:0; left:0;"> 
+            <img src="/images/Raleigh.jpg" style="width:100%"/>
+            <h1 style="text-align: center;">Wolfpack Casino</h1>
+            <p style="margin-left: 20px; margin-right: 20px;">
+                Welcome to Wolfpack casino. This app was made as a part of of a senior design project by 
+                ECE students at North Carolina State University. The mobile application can be used to scan 
+                in casino chips, which were also part of the project, and store them in a digital wallet. This 
+                allows users to secure thier chips and better keep track of which chips are theirs. Using NFC technology
+                chips can be added to any users digital wallet with the simple tap of their phone. RFID is used as well to 
+                allow the casino to constantly locate chips. Please download our Android app below, sign up for an account and
+                test out our senior design project.
+            </p>
+            <div style="text-align:center;">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                <button id="download_button" style="background-color: #CC0000; border: none; color:white; font-size: 20px; padding-top: 10px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px; cursor: pointer;"><i class="fa fa-download"></i> Download App</button>
+                <script type="text/javascript">
+                    $('#download_button').click(function(){
+                    window.open("/download")
+                    })
+                </script>
+            </div>
+           
+        </div> 
     </body>
 </html>
